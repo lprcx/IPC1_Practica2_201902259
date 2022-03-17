@@ -4,6 +4,7 @@
  */
 package ipc1_practica2_201902259;
 
+import Hilos.Cronometro;
 import Interfaz.VentanaP;
 
 
@@ -14,6 +15,7 @@ public class IPC1_Practica2_201902259 {
     
     public static void main(String[] args) {
         new VentanaP();
+        
     }
     
 }

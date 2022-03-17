@@ -4,6 +4,7 @@
  */
 package Interfaz;
 
+import Hilos.Cronometro;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -19,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -32,6 +34,7 @@ public class VentanaP extends JFrame implements ActionListener {
     JRadioButton asc, desc, alg1, alg2, alg3;
     ButtonGroup ascydesc, algoritmos;
     JTextField titulo, ruta;
+    public static JLabel cronom;
 
     public VentanaP() {
         //Radio Button ascendente y descendente
@@ -117,6 +120,13 @@ public class VentanaP extends JFrame implements ActionListener {
         ordenar.setBackground(Color.LIGHT_GRAY);
         this.add(ordenar);
 
+        //JLabel
+        cronom = new JLabel("00:00");
+        cronom.setBounds(710, 270, 80, 30);
+        cronom.setFont(new Font("Consolas", Font.BOLD, 14));
+        cronom.setVisible(true);
+        this.add(cronom);
+
         //ICONO DE LA APLICACION
         this.setIconImage(new ImageIcon(getClass().getResource("Usac_logo.png")).getImage());
 
@@ -158,55 +168,52 @@ public class VentanaP extends JFrame implements ActionListener {
 
     public void leerarchivo() {
         try {
-        lector = new FileReader(archivo);
-        buff = new BufferedReader(lector);
-        String contline;
-        while ((contline = buff.readLine()) != null) {
-            textcont += contline;
-        }
-        System.out.println(textcont);
-        JsonParser JSONValue = new JsonParser();
-        Object objeto = JSONValue.parse(textcont);
-
-        JsonObject ob = (JsonObject) objeto;
-        String Titulo = ob.get("title").getAsString();
-        titulo.setEditable(true);
-        titulo.setText(Titulo);
-        titulo.setEditable(false);
-        Object datos = ob.get("dataset");
-        JsonArray arreglo = (JsonArray) datos;
-        numeros = new int[arreglo.size()];
-        for (int i = 0; i < arreglo.size(); i++) {
-            System.out.println("numero " + i + " : " + arreglo.get(i).getAsInt());
-            numeros[i] = arreglo.get(i).getAsInt();
-        }
-
-    }
-    catch (Exception e
-
-    
-        ) {
-            System.out.println("Hubo un error :c");
-    }
-
-    
-        finally {
-            try {
-            if (null != lector) {
-                lector.close();
+            lector = new FileReader(archivo);
+            buff = new BufferedReader(lector);
+            String contline;
+            while ((contline = buff.readLine()) != null) {
+                textcont += contline;
             }
-        } catch (Exception e2) {
-            System.out.println(e2);
+            System.out.println(textcont);
+            JsonParser JSONValue = new JsonParser();
+            Object objeto = JSONValue.parse(textcont);
+
+            JsonObject ob = (JsonObject) objeto;
+            String Titulo = ob.get("title").getAsString();
+            titulo.setEditable(true);
+            titulo.setText(Titulo);
+            titulo.setEditable(false);
+            Object datos = ob.get("dataset");
+            JsonArray arreglo = (JsonArray) datos;
+            numeros = new int[arreglo.size()];
+            for (int i = 0; i < arreglo.size(); i++) {
+                System.out.println("numero " + i + " : " + arreglo.get(i).getAsInt());
+                numeros[i] = arreglo.get(i).getAsInt();
+            }
+
+        } catch (Exception e) {
+            System.out.println("Hubo un error :c");
+        } finally {
+            try {
+                if (null != lector) {
+                    lector.close();
+                }
+            } catch (Exception e2) {
+                System.out.println(e2);
+            }
         }
     }
-}
 
-@Override
-        public void actionPerformed(ActionEvent e) {
+    @Override
+    public void actionPerformed(ActionEvent e) {
         if (e.getSource() == examinar) {
             cargararchivo();
         } else if (e.getSource() == generarg) {
             leerarchivo();
+        } else if (e.getSource() == ordenar) {
+            Cronometro c = new Cronometro();
+            c.start();
+
         }
 
     }
