@@ -188,10 +188,12 @@ public class VentanaP extends JFrame implements ActionListener {
         }
     }
 
-    int[] numeros;
+    public static int[] numeros;
+    public static int[] numerosd;
 
     public void leerarchivo() {
         try {
+            textcont = "";
             lector = new FileReader(archivo);
             buff = new BufferedReader(lector);
             String contline;
@@ -210,9 +212,11 @@ public class VentanaP extends JFrame implements ActionListener {
             Object datos = ob.get("dataset");
             JsonArray arreglo = (JsonArray) datos;
             numeros = new int[arreglo.size()];
+            numerosd = new int[arreglo.size()];
             for (int i = 0; i < arreglo.size(); i++) {
                 System.out.println("numero " + i + " : " + arreglo.get(i).getAsInt());
                 numeros[i] = arreglo.get(i).getAsInt();
+                numerosd[i] = arreglo.get(i).getAsInt();
             }
 
         } catch (Exception e) {
@@ -254,6 +258,7 @@ public class VentanaP extends JFrame implements ActionListener {
         } else if (e.getSource() == generarg) {
             leerarchivo();
             grafica();
+            graf.repaint();
         } else if (e.getSource() == ordenar) {
             Cronometro c = new Cronometro();
             if (asc.isSelected() == true) {

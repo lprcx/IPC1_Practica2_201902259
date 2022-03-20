@@ -4,6 +4,7 @@
  */
 package Hilos;
 
+import Interfaz.Reporte;
 import static Interfaz.VentanaP.cmov;
 import java.awt.Color;
 import java.awt.Font;
@@ -39,6 +40,8 @@ public class insercionascendente extends Thread {
             try {
                 Insercion(this.arreglo);
                 this.cr.stop();
+                Reporte r = new Reporte();
+                r.reporte();
             } catch (InterruptedException ex) {
 
             }
