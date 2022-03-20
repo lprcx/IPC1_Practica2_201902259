@@ -4,6 +4,7 @@
  */
 package Hilos;
 
+import Interfaz.Reporte2;
 import static Interfaz.VentanaP.cmov;
 import java.awt.Color;
 import static java.lang.Thread.sleep;
@@ -38,6 +39,8 @@ public class inserciondescendente extends Thread{
             try {
                 Insercion(this.arreglo);
                 this.cr.stop();
+                Reporte2 r = new Reporte2();
+                r.reporte2();
             } catch (InterruptedException ex) {
 
             }

@@ -67,7 +67,7 @@ public class VentanaP extends JFrame implements ActionListener {
         //Radio Button algoritmos
         algoritmos = new ButtonGroup();
         alg1 = new JRadioButton();
-        alg1.setText("Quicksort");
+        alg1.setText("Inserción");
         alg1.setBounds(720, 150, 120, 30);
         alg1.setBackground(Color.PINK);
         alg1.setSelected(true);

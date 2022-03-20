@@ -25,11 +25,10 @@ import javax.swing.JOptionPane;
  *
  * @author Compufire
  */
-public class Reporte {
-
-    public void reporte() {
+public class Reporte2 {
+    public void reporte2() {
         String nombreReporte;
-        File reporte;
+        File reporte2;
         FileWriter fw;
         BufferedWriter br;
         String cadenaHTML;
@@ -38,8 +37,8 @@ public class Reporte {
             DateTimeFormatter dtf3 = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
             String fecha = dtf3.format(LocalDateTime.now());
             nombreReporte = fecha + ".html";
-            reporte = new File(nombreReporte);
-            fw = new FileWriter(reporte);
+            reporte2 = new File(nombreReporte);
+            fw = new FileWriter(reporte2);
             br = new BufferedWriter(fw);
 
             cadenaHTML = "<!doctype html>\n"
@@ -81,7 +80,7 @@ public class Reporte {
                     + "\n"
                     + "         <h2>Ordenamiento por pasos:</h2>";
             cadenaHTML += Insercion(VentanaP.numerosd);
-            cadenaHTML += "         <h2>Datos Ordenados Ascendentemente:</h2>"
+            cadenaHTML += "         <h2>Datos Ordenados Descendentemente:</h2>"
                     + "       <table class=\"table table-dark table-striped\">\n"
                     + "        <thead>\n"
                     + "            <tr>\n"
@@ -152,7 +151,7 @@ public class Reporte {
         for (int i = 1; i < A.length; i++) {
             aux = A[i];
             int j = i - 1;
-            while ((j >= 0) && (aux < A[j])) {
+            while ((j >= 0) && (aux > A[j])) {
                 A[j + 1] = A[j];
                 j--;
             }
