@@ -5,6 +5,8 @@
 package Interfaz;
 
 import Hilos.Cronometro;
+import Hilos.insercionascendente;
+import Hilos.inserciondescendente;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -21,8 +23,14 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -34,7 +42,9 @@ public class VentanaP extends JFrame implements ActionListener {
     JRadioButton asc, desc, alg1, alg2, alg3;
     ButtonGroup ascydesc, algoritmos;
     JTextField titulo, ruta;
-    public static JLabel cronom;
+    public JPanel graf;
+    public ChartPanel p2;
+    public static JLabel cronom, tiempo, mov, cmov;
 
     public VentanaP() {
         //Radio Button ascendente y descendente
@@ -57,26 +67,13 @@ public class VentanaP extends JFrame implements ActionListener {
         //Radio Button algoritmos
         algoritmos = new ButtonGroup();
         alg1 = new JRadioButton();
-        alg1.setText("Algoritmo 1");
+        alg1.setText("Quicksort");
         alg1.setBounds(720, 150, 120, 30);
         alg1.setBackground(Color.PINK);
-
-        alg2 = new JRadioButton();
-        alg2.setText("Algoritmo 2");
-        alg2.setBounds(720, 170, 120, 30);
-        alg2.setBackground(Color.PINK);
-
-        alg3 = new JRadioButton();
-        alg3.setText("Algoritmo 3");
-        alg3.setBounds(720, 190, 120, 30);
-        alg3.setBackground(Color.PINK);
+        alg1.setSelected(true);
 
         algoritmos.add(alg1);
-        algoritmos.add(alg2);
-        algoritmos.add(alg3);
         add(alg1);
-        add(alg2);
-        add(alg3);
 
         //texfield 
         ruta = new JTextField();
@@ -122,10 +119,37 @@ public class VentanaP extends JFrame implements ActionListener {
 
         //JLabel
         cronom = new JLabel("00:00");
-        cronom.setBounds(710, 270, 80, 30);
+        cronom.setBounds(770, 270, 80, 30);
         cronom.setFont(new Font("Consolas", Font.BOLD, 14));
         cronom.setVisible(true);
         this.add(cronom);
+        
+        //JLabel
+        tiempo = new JLabel("Tiempo:");
+        tiempo.setBounds(710, 270, 80, 30);
+        tiempo.setFont(new Font("Consolas", Font.BOLD, 14));
+        tiempo.setVisible(true);
+        this.add(tiempo);
+        
+        //JLabel
+        mov = new JLabel("Movimientos:");
+        mov.setBounds(710, 320, 100, 30);
+        mov.setFont(new Font("Consolas", Font.BOLD, 14));
+        mov.setVisible(true);
+        this.add(mov);
+        
+          //JLabel
+        cmov = new JLabel("0");
+        cmov.setBounds(820, 320, 100, 30);
+        cmov.setFont(new Font("Consolas", Font.BOLD, 14));
+        cmov.setVisible(true);
+        this.add(cmov);
+
+        graf = new JPanel();
+        //graf.setBackground(Color.BLACK);
+        graf.setBounds(75, 95, 600, 350);
+        graf.setLayout(null);
+        this.add(graf);
 
         //ICONO DE LA APLICACION
         this.setIconImage(new ImageIcon(getClass().getResource("Usac_logo.png")).getImage());
@@ -204,16 +228,42 @@ public class VentanaP extends JFrame implements ActionListener {
         }
     }
 
+    public void grafica() {
+        //grafica de barras de prestamos
+        DefaultCategoryDataset datos2 = new DefaultCategoryDataset();
+        for (int i = 0; i < numeros.length; i++) {
+            datos2.addValue(numeros[i], String.valueOf(numeros[i]), "");
+        }
+
+        JFreeChart barras = ChartFactory.createBarChart("", "numeros", "", datos2, PlotOrientation.VERTICAL, true, true, false);
+        barras.setBackgroundPaint(Color.PINK);
+        barras.getTitle().setPaint(Color.BLACK);
+        barras.getTitle().setFont(new Font("Century Gothic", Font.PLAIN, 15));
+        p2 = new ChartPanel(barras);
+        p2.setBounds(0, 0, 600, 350);
+        p2.setVisible(true);
+        graf.add(p2);
+        graf.repaint();
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == examinar) {
             cargararchivo();
         } else if (e.getSource() == generarg) {
             leerarchivo();
+            grafica();
         } else if (e.getSource() == ordenar) {
             Cronometro c = new Cronometro();
-            c.start();
-
+            if (asc.isSelected() == true) {
+                insercionascendente i = new insercionascendente(graf, numeros, c);
+                i.start();
+            }
+            else if (desc.isSelected()==true) {
+                inserciondescendente d = new inserciondescendente(graf, numeros, c);
+                d.start();
+            }
         }
 
     }
