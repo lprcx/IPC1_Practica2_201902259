@@ -15,7 +15,7 @@ public class Cronometro extends Thread {
         this.segundos = 0;
     }
     public static boolean ban = true;
-
+    //funcionalidad del cronometro
     @Override
     public void run() {
         if (ban) {

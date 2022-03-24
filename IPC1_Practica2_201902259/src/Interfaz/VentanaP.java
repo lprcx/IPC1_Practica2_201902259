@@ -174,7 +174,7 @@ public class VentanaP extends JFrame implements ActionListener {
     File archivo;
     FileReader lector;
     BufferedReader buff;
-
+    //metodo para cargar la ruta de los arshivos
     public void cargararchivo() {
         try {
             JFileChooser busc = new JFileChooser();
@@ -196,7 +196,7 @@ public class VentanaP extends JFrame implements ActionListener {
 
     public static int[] numeros;
     public static int[] numerosd;
-
+    //cargar y leer achivos
     public void leerarchivo() {
         try {
             textcont = "";
@@ -239,7 +239,7 @@ public class VentanaP extends JFrame implements ActionListener {
     }
     JFreeChart barras;
     public void grafica() {
-        //grafica de barras de prestamos
+        //grafica del ordenamiento
         DefaultCategoryDataset datos2 = new DefaultCategoryDataset();
         for (int i = 0; i < numeros.length; i++) {
             datos2.addValue(numeros[i], String.valueOf(numeros[i]), "");

@@ -54,11 +54,11 @@ public class insercionascendente extends Thread {
         }
 
     }
-
+//parar el hilo
     public void parar() {
         state = false;
     }
-
+    //metodo para ordenamiento de inserción
     public void Insercion(int[] A) throws InterruptedException {
         int aux;
         this.cr.start();
@@ -83,7 +83,7 @@ public class insercionascendente extends Thread {
         }
         parar();
     }
-
+    //metodo para actualizar
     public void grafica(int[] numeros) {
         //grafica de barras de prestamos
         String c = "";
@@ -100,6 +100,7 @@ public class insercionascendente extends Thread {
         this.panel.add(p2);
 
     }
+    //metodo para guardar la imagen
     public static void grafimag(JFreeChart grafii){
         ChartRenderingInfo iim = new ChartRenderingInfo(new StandardEntityCollection());
         File imagen = new File("grafica.png");
