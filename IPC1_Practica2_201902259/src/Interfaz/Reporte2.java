@@ -7,6 +7,7 @@ package Interfaz;
 import static Interfaz.VentanaP.cmov;
 import static Interfaz.VentanaP.cronom;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -127,7 +128,9 @@ public class Reporte2 {
 
             HTMLWorker htmlWorker = new HTMLWorker(document);
             htmlWorker.parse(new StringReader(contenido));
-
+            Image imag = Image.getInstance("grafica1.png");
+            imag.scaleToFit(700, 400);
+            document.add(imag);
             document.close();
             abrirarchivo(nombre + ".pdf");
             abrirarchivo(nombre + ".html");

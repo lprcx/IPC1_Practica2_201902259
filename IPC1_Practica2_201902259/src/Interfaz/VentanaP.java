@@ -17,6 +17,9 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.ButtonGroup;
@@ -28,7 +31,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -231,7 +237,7 @@ public class VentanaP extends JFrame implements ActionListener {
             }
         }
     }
-
+    JFreeChart barras;
     public void grafica() {
         //grafica de barras de prestamos
         DefaultCategoryDataset datos2 = new DefaultCategoryDataset();
@@ -239,7 +245,7 @@ public class VentanaP extends JFrame implements ActionListener {
             datos2.addValue(numeros[i], String.valueOf(numeros[i]), "");
         }
 
-        JFreeChart barras = ChartFactory.createBarChart("", "numeros", "", datos2, PlotOrientation.VERTICAL, true, true, false);
+        barras = ChartFactory.createBarChart("", "numeros", "", datos2, PlotOrientation.VERTICAL, true, true, false);
         barras.setBackgroundPaint(Color.PINK);
         barras.getTitle().setPaint(Color.BLACK);
         barras.getTitle().setFont(new Font("Century Gothic", Font.PLAIN, 15));
@@ -272,4 +278,5 @@ public class VentanaP extends JFrame implements ActionListener {
         }
 
     }
+    
 }

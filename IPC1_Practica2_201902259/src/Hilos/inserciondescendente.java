@@ -7,11 +7,16 @@ package Hilos;
 import Interfaz.Reporte2;
 import static Interfaz.VentanaP.cmov;
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 import static java.lang.Thread.sleep;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartRenderingInfo;
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -24,6 +29,7 @@ public class inserciondescendente extends Thread{
     int[] arreglo;
     Cronometro cr;
     int movimientos;
+    JFreeChart barras;
 
     public inserciondescendente(JPanel panel, int[] arreglo, Cronometro cr) {
         this.panel = panel;
@@ -39,6 +45,7 @@ public class inserciondescendente extends Thread{
             try {
                 Insercion(this.arreglo);
                 this.cr.stop();
+                grafimag(barras);
                 Reporte2 r = new Reporte2();
                 r.reporte2();
             } catch (InterruptedException ex) {
@@ -85,13 +92,22 @@ public class inserciondescendente extends Thread{
             datos2.addValue(numeros[i], String.valueOf(numeros[i]), "");
         }
 
-        JFreeChart barras = ChartFactory.createBarChart("", "numeros", "", datos2, PlotOrientation.VERTICAL, true, true, false);
+        barras = ChartFactory.createBarChart("", "numeros", "", datos2, PlotOrientation.VERTICAL, true, true, false);
         barras.setBackgroundPaint(Color.PINK);
         ChartPanel p2 = new ChartPanel(barras);
         p2.setBounds(0, 0, 600, 350);
         p2.setVisible(true);
         this.panel.add(p2);
 
+    }
+    public static void grafimag(JFreeChart grafii){
+        ChartRenderingInfo iim = new ChartRenderingInfo(new StandardEntityCollection());
+        File imagen = new File("grafica1.png");
+        try {
+            ChartUtils.saveChartAsPNG(imagen, grafii, 1000, 700);
+        } catch (IOException ex) {
+          //  Logger.getLogger(VentanaP.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
